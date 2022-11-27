@@ -57,7 +57,7 @@ const userCtrl = {
     try {
       const data = await User.findOne(
         { _id: req.params.id },
-        "email firstName lastName avatar role gender address"
+        "email name avatar role gender address"
       )
         .populate("idDepartment")
         .exec();
