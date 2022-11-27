@@ -59,8 +59,8 @@ const userCtrl = {
         { _id: req.params.id },
         "email firstName lastName avatar role gender address"
       )
-        .exec()
-        .populate("idDepartment");
+        .populate("idDepartment")
+        .exec();
       return res.status(200).json({
         success: true,
         data,
