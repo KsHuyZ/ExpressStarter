@@ -38,6 +38,44 @@ const userCtrl = {
       console.log("error: ", error);
     }
   },
+  updateUser: async (req, res) => {
+    const {
+      email,
+      password,
+      name,
+      avatar,
+      role,
+      position,
+      gender,
+      address,
+      birthday,
+      idDepartment,
+    } = req.body;
+
+    try {
+      const user = await User.findOneAndUpdate(
+        {
+          _id: req.params.id,
+        },
+        {
+          email,
+          password,
+          name,
+          avatar,
+          role,
+          position,
+          gender,
+          address,
+          birthday,
+          idDepartment,
+        }
+      );
+
+      return res.status(200).json({ success: true, msg: "success" });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
   signIn: async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -57,7 +95,7 @@ const userCtrl = {
     try {
       const data = await User.findOne(
         { _id: req.params.id },
-        "email name avatar role gender address position"
+        "email name avatar role gender address position password"
       )
         .populate("idDepartment")
         .exec();
@@ -80,6 +118,18 @@ const userCtrl = {
       return res.status(200).json({
         success: true,
         data,
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  removeUser: async (req, res) => {
+    const id = req.params.id;
+    try {
+      const user = await User.findByIdAndDelete(id);
+      return res.status(200).json({
+        success: true,
+        user,
       });
     } catch (error) {
       console.log("error: ", error);
