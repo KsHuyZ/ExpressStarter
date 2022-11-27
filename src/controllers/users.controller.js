@@ -10,6 +10,7 @@ const userCtrl = {
       position,
       gender,
       address,
+      birthday,
       idDepartment,
     } = req.body;
     try {
@@ -25,6 +26,7 @@ const userCtrl = {
           role,
           gender,
           position,
+          birthday,
           address,
           idDepartment,
         });

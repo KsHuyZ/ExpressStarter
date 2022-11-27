@@ -27,6 +27,10 @@ const userModel = mongoose.Schema(
       type: String,
       require: false,
     },
+    birthday: {
+      type: String,
+      require: false,
+    },
     address: {
       type: String,
       require: false,
