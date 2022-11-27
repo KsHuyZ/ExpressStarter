@@ -4,8 +4,7 @@ const userCtrl = {
     const {
       email,
       password,
-      firstName,
-      lastName,
+      name,
       avatar,
       role,
       gender,
@@ -19,8 +18,7 @@ const userCtrl = {
       } else {
         const user = new User({
           email,
-          first_name: firstName,
-          last_name: lastName,
+          name: name,
           password,
           avatar: avatar,
           role,
