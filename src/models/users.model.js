@@ -22,6 +22,23 @@ const userModel = mongoose.Schema(
       type: String,
       require: [true, "Please enter name"],
     },
+    // coder, projectManager, leader, admin
+    role: {
+      type: String,
+      require: false,
+    },
+    gender: {
+      type: String,
+      require: false,
+    },
+    address: {
+      type: String,
+      require: false,
+    },
+    idDepartment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "department",
+    },
   },
 
   { timestamps: true }
