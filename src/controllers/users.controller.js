@@ -7,6 +7,7 @@ const userCtrl = {
       name,
       avatar,
       role,
+      position,
       gender,
       address,
       idDepartment,
@@ -23,6 +24,7 @@ const userCtrl = {
           avatar: avatar,
           role,
           gender,
+          position,
           address,
           idDepartment,
         });
