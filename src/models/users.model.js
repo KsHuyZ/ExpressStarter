@@ -5,6 +5,23 @@ const userModel = mongoose.Schema(
       type: String,
       require: [true, "Please enter name"],
     },
+    last_name: {
+      type: String,
+      require: [true, "Please enter name"],
+    },
+    password: {
+      type: String,
+      require: [true, "Please enter name"],
+    },
+    avatar: {
+      type: String,
+      require: [true, "Please enter name"],
+      default: "../public/images/avt-default.jpg",
+    },
+    email: {
+      type: String,
+      require: [true, "Please enter name"],
+    },
   },
 
   { timestamps: true }
