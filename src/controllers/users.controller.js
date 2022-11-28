@@ -83,8 +83,17 @@ const userCtrl = {
     const { email, password } = req.body;
     try {
       const existEmail = await User.findOne({ email: email });
-      console.log(existEmail);
-    } catch (error) {}
+      if (!existEmail) {
+        return res.status(400).json({ success: false, msg: 1 });
+      }
+      const user = await User.findOne({ email, password });
+      if (!user) {
+        return res.status(400).json({ success: false, msg: 2 });
+      }
+      return res.status(200).json({ success: true, user });
+    } catch (error) {
+      console.log(error);
+    }
   },
   allUser: async (req, res) => {
     try {
@@ -98,7 +107,7 @@ const userCtrl = {
     try {
       const data = await User.findOne(
         { _id: req.params.id },
-        "email name avatar role gender address position password"
+        "email name avatar role gender address position password birthday"
       )
         .populate("idDepartment")
         .exec();
@@ -112,11 +121,11 @@ const userCtrl = {
   },
   searchByEmail: async (req, res) => {
     try {
-      const data = await User.findOne(
+      const data = await User.find(
         {
           email: { $regex: req.params.q },
         },
-        "email firstName lastName avatar role gender address"
+        "email name avatar role gender address"
       ).exec();
 
       return res.status(200).json({
@@ -212,12 +221,12 @@ const userCtrl = {
   searchEmailHasDepartment: async (req, res) => {
     const departmentId = req.params.departmentId;
     try {
-      const data = await User.findOne(
+      const data = await User.find(
         {
           email: { $regex: req.params.q },
           departmentId: departmentId,
         },
-        "email firstName lastName avatar role gender address"
+        "email name avatar role gender address position"
       ).exec();
 
       return res.status(200).json({
