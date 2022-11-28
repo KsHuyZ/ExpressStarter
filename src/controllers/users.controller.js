@@ -113,11 +113,12 @@ const userCtrl = {
   searchByEmail: async (req, res) => {
     try {
       const data = await User.findOne(
-        { email: req.params.q },
+        {
+          email: { $regex: req.params.q },
+        },
         "email firstName lastName avatar role gender address"
-      )
-        .exec()
-        .populate("idDepartment");
+      ).exec();
+
       return res.status(200).json({
         success: true,
         data,
@@ -203,6 +204,40 @@ const userCtrl = {
         res.status(200).json({ message: "Update successfully" });
       } else {
         console.log(updatedData);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  searchEmailHasDepartment: async (req, res) => {
+    const departmentId = req.params.departmentId;
+    try {
+      const data = await User.findOne(
+        {
+          email: { $regex: req.params.q },
+          departmentId: departmentId,
+        },
+        "email firstName lastName avatar role gender address"
+      ).exec();
+
+      return res.status(200).json({
+        success: true,
+        data,
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  searchEmailHasNotDepartment: async (req, res) => {
+    try {
+      try {
+        const users = await User.find({ email: { $regex: req.params.q } });
+        if (users) {
+          const data = users.filter((item) => !item.idDepartment);
+          return res.status(200).json(data);
+        }
+      } catch (error) {
+        console.log("error: ", error);
       }
     } catch (error) {
       console.log("error: ", error);

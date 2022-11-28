@@ -22,4 +22,15 @@ router.delete(
   "/remove-user-department/:deleteId",
   userCtrl.removeUserBelongToDepartment
 );
+
+// search data
+// :q is text
+router.get(
+  "/search-has-department/:departmentId/:q",
+  userCtrl.searchEmailHasDepartment
+);
+router.get(
+  "/search-has-not-department/:q",
+  userCtrl.searchEmailHasNotDepartment
+);
 module.exports = router;

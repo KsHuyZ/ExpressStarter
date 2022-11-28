@@ -1,6 +1,21 @@
 const mongoose = require("mongoose");
 
 
+const reviewSchema = mongoose.Schema(
+    {
+      name: { type: String, required: false },
+      comment: { type: String, required: false },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: "user",
+      },
+    },
+    {
+      timestamps: true,
+    }
+  );
+
 const fileSchema = mongoose.Schema(
     {
         {
@@ -34,7 +49,8 @@ const fileSchema = mongoose.Schema(
     {
         attackFile: String,
         require: false
-    }
+    },
+    review :[reviewSchema]
     },
     {
       timestamps: true,
