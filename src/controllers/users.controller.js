@@ -1,4 +1,6 @@
 const User = require("../models/users.model");
+const Department = require("../models/department.model");
+
 const userCtrl = {
   createUser: async (req, res) => {
     const {
@@ -131,6 +133,39 @@ const userCtrl = {
         success: true,
         user,
       });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  showUserBelongToDepartment: async (req, res) => {
+    const q = req.params.idDepartment;
+    try {
+      const data = await User.find({
+        idDepartment: q,
+      });
+
+      if (data) {
+        return res.status(200).json({
+          success: true,
+          data,
+        });
+      } else {
+        return res.status(400).json({
+          success: false,
+          msg: "fails",
+        });
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  showUserNotDepartment: async (req, res) => {
+    try {
+      const users = await User.find();
+      if (users) {
+        const data = users.filter((item) => !item.idDepartment);
+        return res.status(200).json(data);
+      }
     } catch (error) {
       console.log("error: ", error);
     }

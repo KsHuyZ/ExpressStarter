@@ -42,6 +42,7 @@ const userModel = mongoose.Schema(
     idDepartment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "department",
+      require: false,
     },
   },
 
