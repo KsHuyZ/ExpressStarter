@@ -43,6 +43,7 @@ const userModel = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "department",
       require: false,
+      default: null,
     },
   },
 

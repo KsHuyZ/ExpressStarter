@@ -1,4 +1,5 @@
 const User = require("../models/users.model");
+const mongoose = require("mongoose");
 const Department = require("../models/department.model");
 
 const userCtrl = {
@@ -138,7 +139,7 @@ const userCtrl = {
     }
   },
   showUserBelongToDepartment: async (req, res) => {
-    const q = req.params.idDepartment;
+    const q = req.params.departmentId;
     try {
       const data = await User.find({
         idDepartment: q,
@@ -165,6 +166,43 @@ const userCtrl = {
       if (users) {
         const data = users.filter((item) => !item.idDepartment);
         return res.status(200).json(data);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  addUserDepartment: async (req, res) => {
+    const idPerson = req.params.idPerson;
+    const { idDepartment } = req.body;
+    try {
+      const updatedPost = await User.findOneAndUpdate(
+        { _id: idPerson },
+        {
+          idDepartment,
+        }
+      );
+      if (updatedPost) {
+        res.status(200).json({ message: "Update successfully" });
+      } else {
+        console.log(updatedPost);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  removeUserBelongToDepartment: async (req, res) => {
+    const id = req.params.deleteId;
+    try {
+      const updatedData = await User.findOneAndUpdate(
+        { _id: id },
+        {
+          idDepartment: null,
+        }
+      );
+      if (updatedData) {
+        res.status(200).json({ message: "Update successfully" });
+      } else {
+        console.log(updatedData);
       }
     } catch (error) {
       console.log("error: ", error);
